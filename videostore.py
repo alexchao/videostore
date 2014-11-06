@@ -48,19 +48,7 @@ class Price(object):
         raise NotImplementedError()
 
     def get_charge(self, days_rented):
-        result = 0
-        price_code = self.get_price_code()
-        if price_code == Movie.CODE_REGULAR:
-            result += 2
-            if days_rented > 2:
-                result += (days_rented - 2) * 1.5
-        elif price_code == Movie.CODE_NEW_RELEASE:
-            result += days_rented * 3
-        elif price_code == Movie.CODE_CHILDRENS:
-            result += 1.5
-            if days_rented > 3:
-                result += (days_rented - 3) * 1.5
-        return result
+        raise NotImplementedError()
 
 
 class ChildrensPrice(Price):
@@ -68,17 +56,32 @@ class ChildrensPrice(Price):
     def get_price_code(self):
         return Movie.CODE_CHILDRENS
 
+    def get_charge(self, days_rented):
+        result = 1.5
+        if days_rented > 3:
+            result += (days_rented - 3) * 1.5
+        return result
+
 
 class NewReleasePrice(Price):
 
     def get_price_code(self):
         return Movie.CODE_NEW_RELEASE
 
+    def get_charge(self, days_rented):
+        return days_rented * 3
+
 
 class RegularPrice(Price):
 
     def get_price_code(self):
         return Movie.CODE_REGULAR
+
+    def get_charge(self, days_rented):
+        result = 2
+        if days_rented > 2:
+            result += (days_rented - 2) * 1.5
+        return result
 
 
 class Rental(object):
