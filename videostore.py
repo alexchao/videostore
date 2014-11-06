@@ -79,7 +79,7 @@ class Customer(object):
         for rental in self._rentals:
             this_amount = 0
 
-            this_amount = self._amount_for(rental)
+            this_amount = rental.get_charge()
 
             # add frequent renter points
             frequent_renter_points += 1
@@ -98,6 +98,3 @@ class Customer(object):
         result += ('You earned ' + str(frequent_renter_points)
                    + ' frequent renter points')
         return result
-
-    def _amount_for(self, rental):
-        return rental.get_charge()
