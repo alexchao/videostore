@@ -80,10 +80,8 @@ class Customer(object):
         return self._name
 
     def statement(self):
-        frequent_renter_points = 0
         result = 'Rental Record for ' + self.get_name() + '\n';
         for rental in self._rentals:
-            frequent_renter_points += rental.get_frequent_renter_points()
 
             # show figures for this rental
             result += ('\t' + rental.get_movie().get_title() + '\t' +
@@ -91,9 +89,12 @@ class Customer(object):
 
         # add footer lines
         result += 'Amount owed is ' + str(self.get_total_charge()) + '\n'
-        result += ('You earned ' + str(frequent_renter_points)
+        result += ('You earned ' + str(self.get_total_frequent_renter_points())
                    + ' frequent renter points')
         return result
 
     def get_total_charge(self):
         return sum(r.get_charge() for r in self._rentals)
+
+    def get_total_frequent_renter_points(self):
+        return sum(r.get_frequent_renter_points() for r in self._rentals)
