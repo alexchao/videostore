@@ -16,10 +16,17 @@ class Movie(object):
         self.set_price_code(price_code)
 
     def get_price_code(self):
-        return self._price_code
+        return self._price.get_price_code()
 
     def set_price_code(self, price_code):
-        self._price_code = price_code
+        if price_code == Movie.CODE_REGULAR:
+            self._price = RegularPrice()
+        elif price_code == Movie.CODE_CHILDRENS:
+            self._price = ChildrensPrice()
+        elif price_code == Movie.CODE_NEW_RELEASE:
+            self._price = NewReleasePrice()
+        else:
+            raise NotImplementedError('Incorrect Price Code')
 
     def get_title(self):
         return self._title
