@@ -85,16 +85,16 @@ class Customer(object):
         return result
 
     def _amount_for(self, rental):
-        this_amount = 0
+        result = 0
         price_code = rental.get_movie().get_price_code()
         if price_code == Movie.CODE_REGULAR:
-            this_amount += 2
+            result += 2
             if rental.get_days_rented() > 2:
-                this_amount += (rental.get_days_rented() - 2) * 1.5
+                result += (rental.get_days_rented() - 2) * 1.5
         elif price_code == Movie.CODE_NEW_RELEASE:
-            this_amount += rental.get_days_rented() * 3
+            result += rental.get_days_rented() * 3
         elif price_code == Movie.CODE_CHILDRENS:
-            this_amount += 1.5
+            result += 1.5
             if rental.get_days_rented() > 3:
-                this_amount += (rental.get_days_rented() - 3) * 1.5
-        return this_amount
+                result += (rental.get_days_rented() - 3) * 1.5
+        return result
