@@ -96,8 +96,4 @@ class Customer(object):
         return result
 
     def get_total_charge(self):
-        result = 0
-        for rental in self._rentals:
-            result += rental.get_charge()
-        return result
-
+        return sum(r.get_charge() for r in self._rentals)
