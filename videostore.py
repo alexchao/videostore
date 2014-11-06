@@ -41,6 +41,21 @@ class Rental(object):
     def get_movie(self):
         return self._movie
 
+    def get_charge(self):
+        result = 0
+        price_code = self.get_movie().get_price_code()
+        if price_code == Movie.CODE_REGULAR:
+            result += 2
+            if self.get_days_rented() > 2:
+                result += (self.get_days_rented() - 2) * 1.5
+        elif price_code == Movie.CODE_NEW_RELEASE:
+            result += self.get_days_rented() * 3
+        elif price_code == Movie.CODE_CHILDRENS:
+            result += 1.5
+            if self.get_days_rented() > 3:
+                result += (self.get_days_rented() - 3) * 1.5
+        return result
+
 
 class Customer(object):
 
@@ -85,16 +100,4 @@ class Customer(object):
         return result
 
     def _amount_for(self, rental):
-        result = 0
-        price_code = rental.get_movie().get_price_code()
-        if price_code == Movie.CODE_REGULAR:
-            result += 2
-            if rental.get_days_rented() > 2:
-                result += (rental.get_days_rented() - 2) * 1.5
-        elif price_code == Movie.CODE_NEW_RELEASE:
-            result += rental.get_days_rented() * 3
-        elif price_code == Movie.CODE_CHILDRENS:
-            result += 1.5
-            if rental.get_days_rented() > 3:
-                result += (rental.get_days_rented() - 3) * 1.5
-        return result
+        return rental.get_charge()
