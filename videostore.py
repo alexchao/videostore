@@ -47,6 +47,30 @@ class Movie(object):
         return 1
 
 
+class Price(object):
+
+    def get_price_code(self):
+        raise NotImplementedError()
+
+
+class ChildrensPrice(Price):
+
+    def get_price_code(self):
+        return Movie.CODE_CHILDRENS
+
+
+class NewReleasePrice(Price):
+
+    def get_price_code(self):
+        return Movie.CODE_NEW_RELEASE
+
+
+class RegularPrice(Price):
+
+    def get_price_code(self):
+        return Movie.CODE_REGULAR
+
+
 class Rental(object):
     """
     movie -- Movie instance
