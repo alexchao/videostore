@@ -35,11 +35,7 @@ class Movie(object):
         return self._price.get_charge(days_rented)
 
     def get_frequent_renter_points(self, days_rented):
-        if ((self.get_price_code() == Movie.CODE_NEW_RELEASE)
-            and days_rented > 1):
-            # add bonus for a two-day new release rental
-            return 2
-        return 1
+        return self._price.get_frequent_renter_points(days_rented)
 
 
 class Price(object):
@@ -49,6 +45,13 @@ class Price(object):
 
     def get_charge(self, days_rented):
         raise NotImplementedError()
+
+    def get_frequent_renter_points(self, days_rented):
+        if ((self.get_price_code() == Movie.CODE_NEW_RELEASE)
+            and days_rented > 1):
+            # add bonus for a two-day new release rental
+            return 2
+        return 1
 
 
 class ChildrensPrice(Price):
